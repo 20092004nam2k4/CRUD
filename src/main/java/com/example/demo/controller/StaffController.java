@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,17 +22,21 @@ public class StaffController {
     private String fileUpload;
     @Autowired
     private IStaffService iStaffService;
+    //show
     @GetMapping("")
     public String show(Model model){
       model.addAttribute("staff",iStaffService.findAll());
       return "/Home";
     }
+    //xoa
     @GetMapping("/create")
     public ModelAndView create(){
        ModelAndView modelAndView = new ModelAndView("/create");
 modelAndView.addObject("staffFile",new StaffFile());
 return modelAndView;
     }
+
+    //dung de luu anh va upload anh(xu li anh)
     @PostMapping("/save")
     public String saveProduct(@ModelAttribute StaffFile staffFile) {
         MultipartFile multipartFile = staffFile.getImage();
@@ -48,11 +49,29 @@ return modelAndView;
         Staff staff = new Staff(staffFile.getId(), staffFile.getName(),
                 staffFile.getAge(),staffFile.getEmail(), fileName);
         iStaffService.save(staff);
-//        ModelAndView modelAndView = new ModelAndView("/customers");
-//        modelAndView.addObject("productForm", staff);
-//        modelAndView.addObject("message", "Created new product successfully !");
         return "redirect:/customers";
     }
+
+
+    @GetMapping("/delete/{id}")
+    public String deleteCustomer(@PathVariable Long id, Model model) {
+        // Lấy thông tin khách hàng cần xóa
+        Staff staff = iStaffService.getCustomerById(id);
+        // Kiểm tra xem khách hàng có hình ảnh không
+        if (staff != null && staff.getImage() != null) {
+            // Xóa file ảnh từ thư mục
+            String imagePath = "C:\\image\\" + staff.getImage();
+            File imageFile = new File(imagePath);
+            if (imageFile.exists()) {
+                imageFile.delete();
+            }
+        }
+        // Xóa khách hàng
+        iStaffService.remote(id);
+        // Chuyển hướng về trang danh sách khách hàng
+        return "redirect:/customers";
+    }
+
 
 
 }

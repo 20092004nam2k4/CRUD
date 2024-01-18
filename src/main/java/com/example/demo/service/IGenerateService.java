@@ -9,4 +9,6 @@ public interface IGenerateService <T> {
     Optional<T> findByID(Long id);
     void save(T t);
     void remote(Long id);
+
+    Staff getCustomerById(Long id);
 }

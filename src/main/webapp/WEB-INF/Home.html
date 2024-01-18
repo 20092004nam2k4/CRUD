@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
     <title>List Customer</title>
     <style>
@@ -26,12 +27,12 @@
             color: #fff;
         }
 
-        button.edit {
+        a.update {
             background-color: #28a745;
             color: #fff;
         }
 
-        button.delete {
+        a.delete {
             background-color: #dc3545;
             color: #fff;
         }
@@ -49,8 +50,9 @@
         }
 
         img {
-            max-width: 50px;
-            max-height: 50px;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
         }
 
     </style>
@@ -59,78 +61,30 @@
 
 <h3>Customers</h3>
 
-<!-- Uncomment and modify the following code for a new customer link -->
-<!-- <p>
-    <a th:href="@{/customers/create}" >Add new customer</a>
-</p> -->
-
-<!-- Uncomment and modify the following code for a provinces link -->
-<!-- <p>
-    <a th:href="@{/provinces}" >Provinces</a>
-</p> -->
-
-<!-- Uncomment and modify the following code for the search form -->
-<!--
-<div style="margin-bottom: 10px;">
-    <form th:action="@{/customers/search}" method="post">
-        <label><input type="text" name="search" placeholder="Search"></label>
-        <button type="submit" style="background-color: #28a745; color: #fff; border: none; padding: 8px 15px; border-radius: 3px;">Search</button>
-    </form>
-</div>
--->
-
-<!-- Uncomment and modify the following code for notifications -->
-<!--
-<div class="notify">
-    <div th:if="${message}">
-        <span th:text="${message}"></span>
-    </div>
-</div>
--->
-
-<a th:href="@{/customers/create}" >Add</a>
+<a th:href="@{/customers/create}">Add</a>
 
 <table id="customers">
     <thead>
     <tr>
-        <!-- Uncomment and modify the following code for 'STT' column -->
-        <!-- <th>STT</th> -->
         <th>Name</th>
         <th>Age</th>
         <th>Email</th>
         <th>Image</th>
-        <th>Actions</th> <!-- Added for actions column -->
-        <!-- Uncomment and modify the following code for 'Delete' column -->
-        <!-- <th>Delete</th> -->
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="s, o : ${staff}">
-        <!-- Uncomment and modify the following code for 'STT' column -->
-        <!-- <td th:text="${o.count}"></td> -->
         <td th:text="${s.getName()}"></td>
         <td th:text="${s.getAge()}"></td>
         <td th:text="${s.getEmail()}"></td>
-        <td><img th:src="${s.getImage()}"></td>
+        <td><img width="100" height="100" th:src="@{'/image/' + ${s.getImage()}}" alt=""></td>
         <td>
-            <button class="edit" th:href="@{/customers/update/{id}(id=${s.getId()})}">Update</button>
-            <button class="delete" th:href="@{/customers/delete/{id}(id=${s.getId()})}">Delete</button>
+            <a class="update" th:href="@{/customers/update/{id}(id=${s.getId()})}">Update</a>
+            <a class="delete" th:href="@{/customers/delete/{id}(id=${s.getId()})}">Delete</a>
         </td>
-        <!-- Uncomment and modify the following code for 'Update' and 'Delete' links -->
-        <!-- <td><a th:href="@{/customers/update/{id}(id=${c.getId()})}">Update</a></td> -->
-        <!-- <td><a th:href="@{/customers/delete/{id}(id=${c.getId()})}">Delete</a></td> -->
     </tr>
     </tbody>
 </table>
-
-<!-- Uncomment and modify the following code for pagination -->
-<!--
-<div>
-    <a class="btn btn-primary" th:if="${customers.hasPrevious()}" th:href="@{/customers/page(page=${customers.number - 1})}">Previous</a>
-    <span th:text="${customers.number + 1}"></span> | <span th:text="${customers.totalPages}"></span>
-    <a class="btn btn-primary" th:if="${customers.hasNext()}" th:href="@{/customers/page(page=${customers.number + 1})}">Next</a>
-</div>
--->
-
 </body>
 </html>

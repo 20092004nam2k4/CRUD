@@ -30,4 +30,9 @@ iStaffRepository.save(staff);
     public void remote(Long id) {
         iStaffRepository.deleteById(id);
     }
+
+    @Override
+    public Staff getCustomerById(Long id) {
+        return null;
+    }
 }
