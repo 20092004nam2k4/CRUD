@@ -1,8 +1,12 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Staff;
+
+import java.util.Optional;
+
 public interface IGenerateService <T> {
     Iterable<T> findAll();
-    T findByID(Long id);
+    Optional<T> findByID(Long id);
     void save(T t);
-    void delete(Long id);
+    void remote(Long id);
 }

@@ -1,57 +1,136 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
     <title>List Customer</title>
-<body>
-<h3>Customers</h3>
-<!--<p>-->
-<!--    <a th:href="@{/customers/create}">-->
-<!--        Add new customer-->
-<!--    </a>-->
-<!--</p>-->
-<!--<p>-->
-<!--    <a th:href="@{/provinces}">-->
-<!--        Provinces-->
-<!--    </a>-->
-<!--</p>-->
-<!--<div style="margin-bottom: 10px; margin-left: 110px">-->
-<!--    <form th:action="@{/customers/search}" method="post">-->
-<!--        <label><input type="text" name="search"></label>-->
-<!--        <button type="submit" class="btn btn-primary">Search</button>-->
-<!--    </form>-->
-<!--</div>-->
-<!--<div class="notify">-->
-<!--    <div th:if="${message}">-->
-<!--        <span th:text="${message}"></span>-->
-<!--    </div>-->
-<!--</div>-->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
 
-<table id = "customers">
+        h3 {
+            color: #333;
+        }
+
+        a, button {
+            text-decoration: none;
+            padding: 5px 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        a {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        button.edit {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        button.delete {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        img {
+            max-width: 50px;
+            max-height: 50px;
+        }
+
+    </style>
+</head>
+<body>
+
+<h3>Customers</h3>
+
+<!-- Uncomment and modify the following code for a new customer link -->
+<!-- <p>
+    <a th:href="@{/customers/create}" >Add new customer</a>
+</p> -->
+
+<!-- Uncomment and modify the following code for a provinces link -->
+<!-- <p>
+    <a th:href="@{/provinces}" >Provinces</a>
+</p> -->
+
+<!-- Uncomment and modify the following code for the search form -->
+<!--
+<div style="margin-bottom: 10px;">
+    <form th:action="@{/customers/search}" method="post">
+        <label><input type="text" name="search" placeholder="Search"></label>
+        <button type="submit" style="background-color: #28a745; color: #fff; border: none; padding: 8px 15px; border-radius: 3px;">Search</button>
+    </form>
+</div>
+-->
+
+<!-- Uncomment and modify the following code for notifications -->
+<!--
+<div class="notify">
+    <div th:if="${message}">
+        <span th:text="${message}"></span>
+    </div>
+</div>
+-->
+
+<a th:href="@{/customers/create}" >Add</a>
+
+<table id="customers">
     <thead>
     <tr>
-<!--        <th>STT</th>-->
-        <th>name</th>
-        <th>age</th>
-        <th>email</th>
-        <th>image</th>
-<!--        <th>Delete</th>-->
+        <!-- Uncomment and modify the following code for 'STT' column -->
+        <!-- <th>STT</th> -->
+        <th>Name</th>
+        <th>Age</th>
+        <th>Email</th>
+        <th>Image</th>
+        <th>Actions</th> <!-- Added for actions column -->
+        <!-- Uncomment and modify the following code for 'Delete' column -->
+        <!-- <th>Delete</th> -->
     </tr>
     </thead>
     <tbody>
-    <tr th:each="s,o : ${staff}">
-<!--        <td th:text="${o.count}"></td>-->
+    <tr th:each="s, o : ${staff}">
+        <!-- Uncomment and modify the following code for 'STT' column -->
+        <!-- <td th:text="${o.count}"></td> -->
         <td th:text="${s.getName()}"></td>
         <td th:text="${s.getAge()}"></td>
         <td th:text="${s.getEmail()}"></td>
-        <td th:text="${s.getImage()}"></td>
-<!--        <td><a th:href="@{/customers/update/{id}(id=${c.getId()})}">update</a></td>-->
-<!--        <td><a th:href="@{/customers/delete/{id}(id=${c.getId()})}">delete</a></td>-->
+        <td><img th:src="${s.getImage()}"></td>
+        <td>
+            <button class="edit" th:href="@{/customers/update/{id}(id=${s.getId()})}">Update</button>
+            <button class="delete" th:href="@{/customers/delete/{id}(id=${s.getId()})}">Delete</button>
+        </td>
+        <!-- Uncomment and modify the following code for 'Update' and 'Delete' links -->
+        <!-- <td><a th:href="@{/customers/update/{id}(id=${c.getId()})}">Update</a></td> -->
+        <!-- <td><a th:href="@{/customers/delete/{id}(id=${c.getId()})}">Delete</a></td> -->
     </tr>
     </tbody>
 </table>
-<!--<a class="btn btn-primary" th:if="${customers.hasPrevious()}"-->
-<!--   th:href="@{/customers/page(page=${customers.number - 1})}">Previous</a>-->
-<!--<span th:text="${customers.number + 1}"></span> | <span th:text="${customers.totalPages}"></span>-->
-<!--<a class="btn btn-primary" th:if="${customers.hasNext()}"-->
-<!--   th:href="@{/customers/page(page=${customers.number + 1})}">Next</a>-->
+
+<!-- Uncomment and modify the following code for pagination -->
+<!--
+<div>
+    <a class="btn btn-primary" th:if="${customers.hasPrevious()}" th:href="@{/customers/page(page=${customers.number - 1})}">Previous</a>
+    <span th:text="${customers.number + 1}"></span> | <span th:text="${customers.totalPages}"></span>
+    <a class="btn btn-primary" th:if="${customers.hasNext()}" th:href="@{/customers/page(page=${customers.number + 1})}">Next</a>
+</div>
+-->
+
 </body>
 </html>
